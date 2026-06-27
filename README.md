@@ -58,7 +58,7 @@ DSA3050A_MidSem_Justice_670444/
 │   ├── drilldown01_mode_enabled.png          # Drill-down mode enabled
 │   ├── drilldown02_midrange_brands.png       # Drill-down into Mid-Range segment
 │   ├── slicer_filter01_year2019.png          # Slicer filter – Year 2019
-│   └── pbix_saved.png                        # PBIX file save confirmation
+│   └── powerbi dashboard (2)                 # PBIX file save confirmation
 ├── Insights.pdf                              # Business insights report (7 sections)
 └── README.md                                 # This documentation file
 ```
