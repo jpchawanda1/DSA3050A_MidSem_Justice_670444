@@ -76,7 +76,7 @@ The raw source file (`v1-legacy-carapi-datafeed.xlsx`) was loaded into Power BI 
 |----------|-------|
 | Source file | v1-legacy-carapi-datafeed.xlsx |
 | Sheet loaded | v1-legacy-carapi-datafeed-sampl |
-| Original records | ~10,800 rows |
+| Original records | **17,707 rows** |
 | Original columns | 57 columns |
 | Year range (raw) | 2015 – 2020 |
 | Duplicate Trim IDs | Present |
@@ -119,11 +119,11 @@ Also added: **Body Style**, **Specs Detail** (Horsepower + Engine Type), **Row I
 | Records after transformation | **8,939 rows** |
 | Columns after transformation | **63 columns** (original 57 + 9 calculated − 3 removed) |
 | Transformation steps applied | **25 steps** |
-| Records removed (duplicates) | ~200 |
-| Records removed (Year < 2018) | ~1,400 |
-| Records removed (MSRP ≤ 0) | ~200 |
+| Total records removed | **8,768** (17,707 → 8,939) |
+| Records removed (Year < 2018) | majority — dataset includes pre-2018 years back to ~2015 |
+| Records removed (duplicates + MSRP ≤ 0 + missing values) | remainder |
 | Model years in final dataset | 2018, 2019, 2020 |
-| Unique brands | 31 |
+| Unique brands | ~30 (Ford, Chevrolet, Toyota, etc.) |
 | Market segments | 5 (Economy, Entry-Level, Mid-Range, Luxury, Ultra-Luxury) |
 
 The cleaned and exported dataset (`cleaned_carapi_dataset.xlsx`) contains **8,939 rows × 57 columns** after additionally removing empty/sparse columns and rows with missing values in key fields.
@@ -136,17 +136,17 @@ The Power BI report (`MidSemExam.pbix`, Page 1) contains **11 visuals** arranged
 
 | # | Visual Type | Title / Measure | Fields Used |
 |---|-------------|-----------------|-------------|
-| 1 | KPI Card (New) | Average of Price MSRP | Price MSRP (Average) |
-| 2 | KPI Card (New) | Count of Trim ID | Trim ID (Count) |
-| 3 | KPI Card (New) | Average of Dealer Margin | Dealer Margin (Average) |
-| 4 | Clustered Bar Chart | Count of Trim ID by Brand | Y-axis: Brand, X-axis: Count of Trim ID |
-| 5 | Clustered Column Chart | Average Price MSRP by Market Segment | X-axis: Market Segment, Y-axis: Avg MSRP |
-| 6 | Line Chart | Count of Trim ID by Model Year | X-axis: Model Year, Y-axis: Count of Trim ID |
+| 1 | KPI Card (New) | Average of Price MSRP by Mileage Range Highway | Price MSRP (Average) by Highway Mileage Range — displays 67.14K with histogram sparkline |
+| 2 | KPI Card (New) | Count of Trim ID by Value Classification | Trim ID (Count) by Value Classification — displays 2556 with area sparkline |
+| 3 | KPI Card (New) | Average of Dealer Margin by Market Segment | Dealer Margin (Average) by Market Segment — displays 95.35K with area sparkline |
+| 4 | Clustered Bar Chart | Count of Trim ID by Market Segment | Y-axis: Market Segment, X-axis: Count of Trim ID (Mid-Range is highest) |
+| 5 | Clustered Column Chart | Average of Price MSRP by Market Segment | X-axis: Market Segment, Y-axis: Avg MSRP (Ultra-Luxury highest) |
+| 6 | Line Chart | Count of Trim ID by Model Year | X-axis: Model Year (2018–2020), Y-axis: Count of Trim ID (declining trend) |
 | 7 | Donut Chart | Count of Trim ID by Market Segment | Legend: Market Segment, Values: Count of Trim ID |
-| 8 | Table | Brand Financial Metrics | Brand, Dealer Margin, Market Segment, Model Year, Price MSRP |
-| 9 | Matrix | Average MSRP by Brand × Segment | Rows: Brand, Columns: Market Segment, Values: Avg MSRP |
-| 10 | Treemap | Count of Trim ID by Market Segment | Category: Market Segment, Values: Count of Trim ID |
-| 11 | Area Chart | Average Price MSRP by Model Year | X-axis: Model Year, Y-axis: Avg Price MSRP |
+| 8 | Table | Brand Dealer Margin by Market Segment | Columns: Brand, Sum of Dealer Margin, Market Segment |
+| 9 | Matrix | Average of Price MSRP by Brand × Market Segment | Rows: Brand, Columns: Market Segment (Economy / Entry-Level / Luxury), Values: Avg Price MSRP |
+| 10 | Treemap | Count of Trim ID by Market Segment | Category: Market Segment, Values: Count of Trim ID (Mid-Range & Economy dominate) |
+| 11 | Area Chart | Average of Price MSRP by Model Year | X-axis: Model Year, Y-axis: Avg MSRP (rising from ~$49K in 2018 to ~$51K in 2020) |
 
 ---
 
@@ -164,15 +164,16 @@ All three slicers filter every visual on the page simultaneously.
 
 ### Drill-Down
 
-The **Clustered Bar Chart** (Count of Trim ID by Brand) uses a two-level hierarchy:
+The **Clustered Bar Chart** (Count of Trim ID by Market Segment) uses a two-level hierarchy:
 
 ```
 Market Segment  →  Brand
 ```
 
 - Drill-down mode enabled via the drill-down icon on the visual header
-- Clicking any segment bar (e.g., "Mid-Range") drills down to show individual brands within that segment
-- Clicking the up-arrow returns to the segment level
+- At the top level the chart shows count of trims per Market Segment (Mid-Range, Economy, Luxury, Ultra-Luxury, Entry-Level)
+- Clicking any segment bar drills down to show individual brands within that segment
+- Clicking the up-arrow returns to the Market Segment level
 - Example: Mid-Range drill-down shows Ford, Chevrolet, Ram, GMC, Toyota, Nissan among top brands
 
 ### Cross-Filtering
