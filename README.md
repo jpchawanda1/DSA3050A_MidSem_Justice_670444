@@ -17,7 +17,6 @@
 DSA3050A_MidSem_Justice_670444/
 ├── Dataset/
 │   ├── v1-legacy-carapi-datafeed.xlsx        # Original source dataset (raw)
-│   └── cleaned_carapi_dataset.xlsx           # Cleaned & transformed dataset (output)
 ├── PBIX/
 │   └── MidSemExam.pbix                       # Power BI report file with all visuals
 ├── Screenshots/
